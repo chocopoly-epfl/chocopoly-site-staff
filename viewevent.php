@@ -93,32 +93,6 @@ require "times.php"; ?>
 		}
 	}
 
-	// if (isset($_POST['remove'])){
-	// 	if (isset($_SESSION['Username'])){
-	// 		$lpeople = explode(',', $people);
-	// 		$uname = filter_var($_SESSION['Username'], FILTER_SANITIZE_STRING);
-	// 		$nbppl = count($lpeople);
-	// 		for ($i=0; $i<$nbppl; $i++){
-	// 			if ($lpeople[$i] == $uname){
-	// 				unset($lpeople[$i]);
-	// 				unset($lhoraire[$i]);
-	// 			}
-	// 		}
-	// 		// print_r($lpeople);
-	// 		$ename = filter_var($ename, FILTER_SANITIZE_STRING);
-	// 		$people = implode(',', $lpeople);
-	// 		$horaire = implode('-', $lhoraire);
-	// 		$sql = "UPDATE events SET Participants = '".$people."' WHERE EventId = '".$ename."';";
-	// 		$result = mysqli_query($conn, $sql);
-	// 		$sql = "UPDATE events SET Horaire = '".$horaire."' WHERE EventId = '".$ename."';";
-	// 		$result = mysqli_query($conn, $sql);
-	// 		echo "<script type='text/JavaScript'>window.location.replace('./viewevent.php?e=".$ename."');</script>";
-	// 	}else{
-	// 		$_SESSION['lastpage'] = "./viewevent.php?e=".$ename;
-	// 		echo "<script type='text/JavaScript'>window.location.replace('./setname.php');</script>";
-	// 	}
-	// }
-
 	?>	
 
 </body>
