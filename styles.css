@@ -1,0 +1,197 @@
+body {
+    background-color: rgb(255, 229, 142);
+    color: rgb(0, 0, 0);
+    text-align: center;
+    margin: auto;
+    font-family: Montserrat;
+}
+
+table {
+    margin: auto;
+    border-collapse: collapse;
+}
+/* td {
+    padding: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+} */
+
+.sp {
+    padding: 20px;
+    padding-top: 40px;
+}
+
+.sp2 {
+    padding: 5px;
+}
+
+.unselectable {
+    user-drag: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+.not {
+    background-color: rgb(255, 255, 255);
+}
+.yes {
+    background-color: rgb(0, 255, 76);
+}
+
+.bdr {
+    background-color: rgb(255, 255, 255);
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    padding: 20px;
+    padding-top: 40px;
+}
+
+a {
+    color: lightblue;
+    font-style: underline;
+    transition: 0.3s;
+}
+
+a:hover {
+    color: white;
+    transition: 0.3s;
+}
+
+svg {
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    fill: #ffffff;
+	font-weight: bold;
+	font-family: 'Gemunu Libre', sans-serif;
+    font-size: 60px;
+    margin-top: 20px;
+    margin-bottom: -10px;
+}
+
+h2 {
+    text-align: center;
+	font-weight: bold;
+	font-family: Montserrat;
+    font-size: 40px;
+    color:rgb(0, 0, 0);
+    fill:rgb(0, 0, 0);
+}
+
+.hache {
+    text-align: center;
+	font-weight: bold;
+	font-family: Montserrat;
+    font-size: 40px;
+    fill:rgb(112, 0, 0);
+    color:rgb(112, 0, 0);
+    padding: 0px;
+    margin: 0px;
+}
+
+button {
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 81, 255);
+    font-family: Montserrat;
+    font-size: 30px;
+    margin: 10px;
+    padding: 20px;
+    border: 3px solid rgb(72, 130, 255);
+    transition:0.3s;
+    border-radius: 20px;
+}
+
+button:hover {
+    background-color: rgb(30, 101, 255);
+    transition:0.3s;
+}
+
+.passinput{
+    font-size: 20px;
+    padding: 5px;
+}
+
+.passbutton{
+    background:rgb(123, 0, 255);
+    padding: 10px;
+    border: 5px solid rgb(61, 0, 112);
+    color:white;
+    border-radius: 10px;
+    font-size: 15px;
+    transition:0.5s;
+}
+.passbutton:hover{
+    background:black;
+    border-radius: 0px;
+    transition:0.5s;
+}
+
+.passbuttonadd{
+    background:rgb(6, 188, 42);
+    padding: 10px;
+    border: 0px;
+    color:white;
+    box-shadow: 5px 5px black;
+    border-radius: 10px;
+    font-size: 25px;
+    transition: 0.3s;
+    margin-bottom: 30px;
+}
+.passbuttonadd:hover{
+    background:rgb(4, 230, 49);
+    box-shadow: 10px 10px black;
+    transition: 0.3s;
+}
+
+.errormessage{
+    color: red;
+    font-size: 20px;
+}
+
+a{
+    color: lightblue;
+    font-style: underline;
+}
+
+.passform{
+    margin: auto;
+    width: fit-content;
+    padding: 20px 40px 20px 40px;
+    border: 5px solid rgb(157, 54, 54);
+    border-radius: 40px;
+    background-color: rgb(141, 0, 0);
+    transition:0.3s;
+	display: inline-block;
+}
+.passform:hover{
+    border: 5px solid rgb(164, 0, 0);
+    border-radius: 20px;
+    background-color: rgb(66, 0, 0);
+    transition:0.3s;
+}
+.passlabel{
+    font-size: 25px;
+}
+.passinput{
+    font-size: 20px;
+    padding: 5px;
+}
+.passbutton{
+    background:rgb(211, 0, 0);
+    padding: 10px;
+    border: 5px solid rgb(112, 0, 0);
+    color:white;
+    border-radius: 10px;
+    font-size: 15px;
+    transition:0.5s;
+}
+.passbutton:hover{
+    background:black;
+    border-radius: 0px;
+    transition:0.5s;
+}
