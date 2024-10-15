@@ -11,7 +11,7 @@
 	<?php
 	echo "<br>";
 		echo "<br><br><form method='POST' autocomplete='off'>
-		<label for='name' class='passlabel'>Allo la terre</label><br>";
+		<label for='name' class='passlabel'>Votre nom</label><br>";
 
 		if (isset($_SESSION['Username'])){
 			$uname = $_SESSION['Username'];
