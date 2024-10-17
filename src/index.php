@@ -35,7 +35,7 @@
 		echo "<rect width='500' height='100' rx='20' ry='20' x='55' y='".(55 + $i*150)."' fill='rgb(100, 0, 0)' />";
 		echo "<rect width='500' height='100' rx='20' ry='20' x='50' y='".(50 + $i*150)."' fill='rgb(255, 255, 255)' />";
 		echo "<text x='75' y='".(110 + $i*150)."' class='hache'>".$name."</text>";
-		echo "<text x='75' y='".(130 + $i*150)."' class='h2'>".datestring($date, 'date')."</text>";
+		echo "<text x='75' y='".(130 + $i*150)."' class='h2'>".datestring($date)."</text>";
 		echo"<circle cx='500' cy='".(100 + $i*150)."' r='30' style='fill:#cccccc'/>";
 		if (participant($uname, explode(";", $part)) >= 0){
 			echo"<circle cx='500' cy='".(100 + $i*150)."' r='25' style='fill:#00ff00'/>";

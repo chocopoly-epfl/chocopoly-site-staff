@@ -12,6 +12,9 @@
 if ($_SERVER['PHP_SELF'] != '/setname.php'){
 	$_SESSION["lastpage"] = $_SERVER['PHP_SELF'];
 }
+if (isset($_GET['e'])){
+	$_SESSION["lastpage"] .= '?e='.$_GET['e'];
+}
 if (!isset($_SESSION['Username']) && $_SERVER['PHP_SELF'] != '/setname.php'){
 	die (header("Location: /setname.php", true, 301));
 }else if($_SERVER['PHP_SELF'] != '/setname.php'){

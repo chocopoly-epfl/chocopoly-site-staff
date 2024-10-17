@@ -1,77 +1,83 @@
 <?php
 	function createEvent($name,$dates,$maxslot){
 		require "dbconn.php";
-		if (checkdates(deformat($dates, 'date')) && checktimes(deformat($dates, 'time'))){
+		if (checkdates($dates, 'all')){
 			$name = filter_var($name, FILTER_SANITIZE_STRING);
 			$maxslot = filter_var($maxslot, FILTER_SANITIZE_STRING);
-			$dates = str_replace("'", "",$dates);
-			$dates = filter_var($dates, FILTER_SANITIZE_STRING);
 			$sql = "INSERT INTO events (Name, Date, Maxslot) VALUES ('".$name."', '".$dates."', '".$maxslot."')";
 			$result = mysqli_query($conn, $sql);
-			return $result;
+
+			$query = "SELECT EventId FROM events ORDER BY EventId DESC";
+			$result = $conn->query($query);
+			if ($result->num_rows > 0) {
+				while($row = $result->fetch_assoc()) {
+					$eventid = $row['EventId'];
+					$link = "https://staff.chocopoly.ch/viewevent.php?e=".$eventid;
+					return json_encode(array("link"=>$link));
+				}
+			}
 			// echo "<script type='text/JavaScript'>window.location.replace('./');</script>";
+			}else{
+				return json_encode(array("link"=>"Erreur"));
+			}
+	}
+
+	function checkdates($dates, $what){
+		$dates = json_decode($dates, true);
+		if ($what != 'date'){
+			foreach ($dates as $key => $value) {
+				$d = explode('-', $value);
+				for ($i=0; $i<2; $i++){
+					if ($d[$i] < 0 || $d[$i] >= 24){
+						return False;
+					}
+					if (($d[$i]*10)%5 != 0 || ($d[$i]*10)%5 != 0){
+						return False;
+					}
+				}
+				if (!($d[1] > $d[0])){
+					return False;
+				}
+			}
+		}
+		if ($what != 'time'){
+			foreach ($dates as $key => $value) {
+				$d = explode('-', $key);
+				if (!checkdate($d[1],$d[0],$d[2])){
+					return False;
+				}
+			}
+		}
+		if ($what == 'time' || $what == 'date' || $what == 'all'){
+			return True;
 		}else{
-			return "Erreur";
+			return False;
 		}
-	}
-
-	function checkdates($dates){
-		for ($i=0; $i<count($dates); $i++){
-			if (!checkdate($dates[$i][1],$dates[$i][0],$dates[$i][2])){
-				return False;
-			}
-		}
-		return True;
-	}
-
-	function checktimes($times){
-		for ($i=0; $i<count($times); $i++){
-			for ($j=0; $j<=1; $j++){
-				if ($times[$i][$j] < 0 || $times[$i][$j] >= 24){
-					return False;
-				}
-				if (($times[$i][$j]*10)%5 != 0 || ($times[$i][$j]*10)%5 != 0){
-					return False;
-				}
-			}
-		}
-		return True;
 	}
 
 	function deformat($dates, $what){
-		$dates = explode(',', $dates);
-		$newdates = [];
-		for ($i=0; $i<count($dates); $i++){
-			$newdates[$i] = explode(':',$dates[$i]);
-		}
-		$symbols = array("'", "{", "}");
-		for ($i=0; $i<count($newdates); $i++){
-			for ($j=0; $j<=1; $j++){
-				for ($k=0; $k<count($symbols); $k++){
-					$newdates[$i][$j] = str_replace($symbols[$k],"",$newdates[$i][$j]);
-				}
+		$dates = json_decode($dates);
+		$export = array();
+		foreach ($dates as $key => $value) {
+			if ($what == 'time'){
+				$d = explode('-', $value);
+			}else if ($what == 'date'){
+					$d = explode('-', $key);
 			}
-		}
-		$export = [];
-		if ($what == 'time'){
-			$nb = 1;
-		}else{
-			$nb = 0;
-		}
-		for ($i=0; $i<count($newdates); $i++){
-			$export[$i] = explode('-',$newdates[$i][$nb]);
+			array_push($export, $d);
 		}
 		return $export;
 	}
 
-	function datestring($dates, $what){
-		$list = deformat($dates, $what);
+	function datestring($dates){
+		$dates = json_decode($dates);
 		$text = "";
-		for ($i=0; $i<count($list); $i++){
+		foreach ($dates as $key => $value) {
+			$d = str_replace('-', '.', $key);
 			if ($text != ""){
 				$text .= ", ";
 			}
-			$text .= $list[$i][0].".".$list[$i][1].".".$list[$i][2];
+			$text .= $d;
 		}
 		return $text;
 	}
