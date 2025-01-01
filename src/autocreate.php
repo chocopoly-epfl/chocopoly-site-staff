@@ -16,10 +16,25 @@
 					return json_encode(array("link"=>$link));
 				}
 			}
+		}else{
+			return json_encode(array("link"=>"Erreur"));
+		}
+	}
+
+	function modifyEvent($id, $name,$dates,$maxslot){
+		require "dbconn.php";
+		if (checkdates($dates, 'all')){
+			$name = filter_var($name, FILTER_SANITIZE_STRING);
+			$maxslot = filter_var($maxslot, FILTER_SANITIZE_STRING);
+			$sql = "UPDATE events SET Name='".$name."', Date='".$dates."', Maxslot='".$maxslot."' WHERE EventId='".$id."'";
+			$result = mysqli_query($conn, $sql);
+
+			$link = "https://staff.chocopoly.ch/viewevent.php?e=".$id;
+			return json_encode(array("link"=>$link));
 			// echo "<script type='text/JavaScript'>window.location.replace('./');</script>";
-			}else{
-				return json_encode(array("link"=>"Erreur"));
-			}
+		}else{
+			return json_encode(array("link"=>"Erreur"));
+		}
 	}
 
 	function checkdates($dates, $what){

@@ -27,6 +27,8 @@ require "times.php"; ?>
 			$date = $row["Date"];
 			$maxslot = $row["Maxslot"];
 			$people = $row["Participants"];
+			$people = json_decode($people, true);
+			// var_dump($people);
 			$_SESSION['lastpage'] = "./viewevent.php?e=".$ename;
 			$ldate = deformat($date,'date');
 			$ltime = deformat($date,'time');
@@ -37,7 +39,7 @@ require "times.php"; ?>
 			for ($i=0; $i<count($ldate); $i++){
 				echo "".$ldate[$i][0]." ".$months[(int)$ldate[$i][1]]." ".$ldate[$i][2]."<br>";
 				echo "<form method='POST' autocomplete='off'>";
-				echo addtimes($ltime[$i][0], $ltime[$i][1], $i, $uname, explode(';', $people), $maxslot);
+				echo addtimes($ltime[$i][0], $ltime[$i][1], $i, $uname, $people, $maxslot);
 			}
 		}
 
@@ -58,41 +60,47 @@ require "times.php"; ?>
 			while($row = $result->fetch_assoc()) {
 				$people = $row["Participants"];
 			}
+			$people = json_decode($people, true);
 			// Alamogus:7,7.5,8,8.5:7,8.5,9;Mogusa:8,8.5,9
-			$lpeople = explode(';', $people);
 			$uname = filter_var($_SESSION['Username'], FILTER_SANITIZE_STRING);
 
-			if (participant($uname, $lpeople) >= 0){
-				unset($lpeople[participant($uname, $lpeople)]);
-				$people = implode(';', $lpeople);
-				// echo $people;
+			if (participant($uname, $people)){
+				unset($people[$uname]);
+				// print_r($people);
 			}
-			$ppl2 = '';
-			if (participant($uname, $lpeople) < 0){
-				if ($people != ''){
-					$ppl2 = ';';
-				}
-				$ppl2 .= $uname;
-				$hours = '';
+			
+				// $ppl2 = '';
+				// if ($people != ''){
+				// 	$ppl2 = ';';
+				// }
+				$lhour = array();
 				for ($i=0; $i<count($ldate); $i++){
 					$phour = filter_var($_POST['heures-'.$i], FILTER_SANITIZE_STRING);
-					$ppl2 .= ':'.$phour;
-					$hours .= $phour;
+					$lhour2 = explode(',',$phour);
+					array_push($lhour, $lhour2);
+					// $ppl2 .= ':'.$phour;
+					// $hours .= $phour;
 				}
-				if ($hours != ''){
-					$people .= $ppl2;
+
+				if (!emptyLists($lhour)){
+					$people[$uname] = $lhour;
 				}
+				// print_r($people);
+				// al('a');
+				$people = json_encode($people);
+				// if ($hours != ''){
+				// 	$people .= $ppl2;
+				// }
 				$ename = filter_var($ename, FILTER_SANITIZE_STRING);
 				$sql = "UPDATE events SET Participants = '".$people."' WHERE EventId = '".$ename."';";
 				$result = mysqli_query($conn, $sql);
 				echo "<script type='text/JavaScript'>window.location.replace('./viewevent.php?e=".$ename."');</script>";
-			}
+
 		}else{
 			$_SESSION['lastpage'] = "./viewevent.php?e=".$ename;
 			echo "<script type='text/JavaScript'>window.location.replace('./setname.php');</script>";
 		}
 	}
-
 	?>	
 
 </body>

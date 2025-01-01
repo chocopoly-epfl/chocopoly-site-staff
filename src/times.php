@@ -15,7 +15,7 @@
 		}
 		// echo $a."-".$b;
 
-		for ($i=$a; $i<=$b; $i++){
+		for ($i=(int)$a; $i<=$b; $i++){
 			array_push($h, $i);
 		}
 
@@ -28,11 +28,11 @@
 		echo "</tr>";
 		echo "<tr>";
 		echo "<td class='sp2' style='border-right: 1px solid black;'></td>";
-		
-		$timemax = timemax($n, $list);
+
+		$timemax = timemax($a, $b, $n, $list);
 		$t = $a;
 		for ($i = 0; $i<count($h)*2-2; $i++){
-			if (countnb($t, $timemax) >= $slotmax){$red = 'background-color:#ff8800;';}else{$red = '';}
+			if ($timemax[$i] >= $slotmax){$red = 'background-color:#ff8800;';}else{$red = '';}
 			echo "<td class='sp2' colspan='1' style='";
 			if ($i % 2 != 0){
 				echo "border-right: 1px solid black;";
@@ -44,7 +44,7 @@
 		echo "</tr>";
 		echo "<tr class='unselectable'>";
 		echo "<td class='sp'></td>";
-		if (participant($uname, $list) >= 0){
+		if (participant($uname, $list)){
 			$times = whattime($uname, $list);
 		}else{
 			$times = [[],[],[],[],[]];
@@ -71,7 +71,7 @@
 	
 	}
 
-	function participant($name, $list){
+	function participant2($name, $list){
 		for ($i=0; $i<count($list); $i++){
 			$n = explode(':', $list[$i]);
 			if ($n[0] == $name){
@@ -81,36 +81,45 @@
 		return -1;
 	}
 
+	function participant($name, $list){
+		if (isset($list[$name])){
+			return True;
+		}
+		return False;
+	}
+
+	function al($text){
+		echo "<script type='text/JavaScript'>alert('".$text."');</script>";
+	}
+
 	function whattime($name, $list){
-		$list2 = [];
-		$i = participant($name, $list);
-		$n = explode(':', $list[$i]);
-		if ($n[0] == $name){
-			for ($j=1; $j<count($n); $j++){
-				array_push($list2, explode(',', $n[$j]));
-			}
-			return $list2;
+		if (isset($list[$name])){
+			return $list[$name];
 		}
 	}
 
-	function timemax($nb, $list){
-		$alltimes = '';
-		for ($i=0; $i<count($list); $i++){
-			if ($list[$i] != ''){
-				$n = explode(':', $list[$i]);
-				$alltimes .= ','.$n[$nb+1];
+	function timemax($a, $b, $nb, $list){
+		$alltimes = array();
+		for ($i = $a; $i<=$b; $i+=0.5){
+			$n = 0;
+			if ($list != []){
+				foreach ($list as $l){
+					if (in_array($i, $l[$nb])){
+						$n++;
+					}
+				}
 			}
+			array_push($alltimes, $n);
 		}
-		return explode(',', $alltimes);
+		return $alltimes;
 	}
 
-	function countnb($nb, $list){
-		$count = 0;
-		for ($i=0; $i<count($list); $i++){
-			if ($list[$i] == $nb){
-				$count++;
+	function emptyLists($list){
+		foreach ($list as $l){
+			if ($l != [""]){
+				return False;
 			}
 		}
-		return $count;
+		return True;
 	}
 ?>

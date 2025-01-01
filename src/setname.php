@@ -26,7 +26,7 @@
 
 	if (isset($_POST['submit'])){
 		if (isset($_POST['name']) && $_POST['name'] != ''){
-			$_SESSION['Username'] = filter_var($_POST["name"], FILTER_SANITIZE_STRING);
+			$_SESSION['Username'] = strtolower(filter_var($_POST["name"], FILTER_SANITIZE_STRING));
 		}else{
 			unset($_SESSION['Username']);
 		}
