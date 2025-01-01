@@ -14,6 +14,7 @@
 		EventId int AUTO_INCREMENT,
 		Name text,
 		Date text NOT NULL,
+		PseudoDate BIGINT NOT NULL,
 		Maxslot int NOT NULL,
 		Participants text DEFAULT NULL,
 		PRIMARY KEY (EventId)

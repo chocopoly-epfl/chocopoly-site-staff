@@ -1,3 +1,9 @@
+html {
+	scroll-behavior: smooth;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+
 body {
     background-color: rgb(255, 229, 142);
     color: rgb(0, 0, 0);
@@ -194,4 +200,10 @@ a{
     background:black;
     border-radius: 0px;
     transition:0.5s;
+}
+
+.svgrect{
+    transition: 0.5s;
+    rx: 20px;
+    ry: 20px;
 }

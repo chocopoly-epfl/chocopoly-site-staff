@@ -4,7 +4,7 @@
 		if (checkdates($dates, 'all')){
 			$name = filter_var($name, FILTER_SANITIZE_STRING);
 			$maxslot = filter_var($maxslot, FILTER_SANITIZE_STRING);
-			$sql = "INSERT INTO events (Name, Date, Maxslot) VALUES ('".$name."', '".$dates."', '".$maxslot."')";
+			$sql = "INSERT INTO events (Name, Date, PseudoDate, Maxslot) VALUES ('".$name."', '".$dates."', '".pseudoDate($dates, 0)."', '".$maxslot."')";
 			$result = mysqli_query($conn, $sql);
 
 			$query = "SELECT EventId FROM events ORDER BY EventId DESC";
@@ -26,12 +26,11 @@
 		if (checkdates($dates, 'all')){
 			$name = filter_var($name, FILTER_SANITIZE_STRING);
 			$maxslot = filter_var($maxslot, FILTER_SANITIZE_STRING);
-			$sql = "UPDATE events SET Name='".$name."', Date='".$dates."', Maxslot='".$maxslot."' WHERE EventId='".$id."'";
+			$sql = "UPDATE events SET Name='".$name."', Date='".$dates."', PseudoDate='".pseudoDate($dates, 0)."', Maxslot='".$maxslot."' WHERE EventId='".$id."'";
 			$result = mysqli_query($conn, $sql);
 
 			$link = "https://staff.chocopoly.ch/viewevent.php?e=".$id;
 			return json_encode(array("link"=>$link));
-			// echo "<script type='text/JavaScript'>window.location.replace('./');</script>";
 		}else{
 			return json_encode(array("link"=>"Erreur"));
 		}
@@ -95,5 +94,31 @@
 			$text .= $d;
 		}
 		return $text;
+	}
+
+	function pseudoDate($date2, $i){
+		$d = json_decode($date2, true);
+		$pseudo = '';
+		foreach ($d as $key => $value) {
+			$date = explode('-',$key);
+			for ($k=2; $k>=0; $k-=1){
+				$pseudo .= $date[$k];
+			}
+
+			$time = explode('-',$value);
+			if ($time[0]*10 < 100){
+				$pseudo .= '0'.$time[0]*10;
+			}else{
+				$pseudo .= $time[0]*10;
+			}
+			return $pseudo;
+		}
+	}
+
+	function datePassed($d){
+		$date = json_decode($d);
+		foreach ($date as $key => $value) {
+			return (time() >= strtotime($key));
+		}
 	}
 ?>
