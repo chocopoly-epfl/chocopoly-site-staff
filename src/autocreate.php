@@ -116,9 +116,7 @@
 	}
 
 	function datePassed($d){
-		$date = json_decode($d);
-		foreach ($date as $key => $value) {
-			return (time() >= strtotime($key));
-		}
+		$date = json_decode($d,true);
+		return (time() - 86400 >= strtotime(array_key_last($date)));
 	}
 ?>

@@ -28,8 +28,12 @@
 		}
 		
 		echo"<div id='box'>";
-		echo"<svg width='600', height='".($i*150 + 50)."'>";
-		echo"<rect width='600' height='".($i*150 + 50)."' rx='20' ry='20' x='0' y='0' rx='0' ry='0' fill='rgb(180, 0, 0)' />";
+		if ($i > 0){
+			echo"<svg width='600', height='".($i*150 + 50)."'>";
+			echo"<rect width='600' height='".($i*150 + 50)."' rx='20' ry='20' x='0' y='0' rx='0' ry='0' fill='rgb(180, 0, 0)' />";
+		}else{
+			echo "Aucun événement en ce moment.";
+		}
 		// echo"<a href='./addevent.php'><rect width='200' height='50' rx='10' ry='10' x='200' y='20' fill='rgb(100, 6, 6)' />";
 		// echo"<text x='260' y='50' class='h1' fill='rgb(255, 255, 255)'>Add Event</text></a>";
 		
