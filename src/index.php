@@ -17,12 +17,14 @@
 	$i = 0;
 	$uname = filter_var($_SESSION['Username'], FILTER_SANITIZE_STRING);
 	
+	if (isset($_GET['e'])){$events = True;}else{$events = False;}
+	
 	if ($result->num_rows >= 0) {
 		
 		while($row = $result->fetch_assoc()) {
 			require_once "autocreate.php";
 			$date = $row["Date"];
-			if (!datePassed($date)){
+			if (!datePassed($date) || $events){
 				$i++;
 			}
 		}
@@ -45,7 +47,7 @@
 			$eid = $row["EventId"];
 			$name = $row["Name"];
 			$date = $row["Date"];
-			if (!datePassed($date)){
+			if (!datePassed($date) || $events){
 				$part = json_decode($row["Participants"], true);
 
 				// $sql = "UPDATE events SET PseudoDate='".pseudoDate($date, 0)."' WHERE EventId='".$eid."'";
@@ -66,6 +68,11 @@
 	}
 	}
 	echo"</svg>";
+	if (!isset($_GET['e'])){
+		echo "<br><br><a href='./?e=all'>Voir tous les events</a><br><br>";
+	}else{
+		echo "<br><br><a href='./'>Voir moins</a><br><br>";
+	}
 	echo"</div>";
 	
 	?>	

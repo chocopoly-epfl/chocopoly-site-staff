@@ -32,7 +32,7 @@ table {
 }
 
 .unselectable {
-    user-drag: none;
+    /* user-drag: none; */
     -webkit-user-drag: none;
     user-select: none;
     -moz-user-select: none;
@@ -56,13 +56,13 @@ table {
 }
 
 a {
-    color: lightblue;
+    color: rgb(255, 0, 0);
     font-style: underline;
     transition: 0.3s;
 }
 
 a:hover {
-    color: white;
+    color: rgb(0, 0, 0);
     transition: 0.3s;
 }
 
@@ -157,11 +157,6 @@ button:hover {
 .errormessage{
     color: red;
     font-size: 20px;
-}
-
-a{
-    color: lightblue;
-    font-style: underline;
 }
 
 .passform{
