@@ -25,24 +25,28 @@ require "times.php"; ?>
 			require_once "autocreate.php";
 			$name = $row["Name"];
 			$date = $row["Date"];
-			$maxslot = $row["Maxslot"];
-			$people = $row["Participants"];
-			$people = json_decode($people, true);
-			// var_dump($people);
-			$_SESSION['lastpage'] = "./viewevent.php?e=".$ename;
-			$ldate = deformat($date,'date');
-			$ltime = deformat($date,'time');
-			$ppl = [];
-			$hr = [];
-			echo "<h1 class='hache'>".$name."</h1><br>";
-			$months = array('', 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre');
-			for ($i=0; $i<count($ldate); $i++){
-				echo "".$ldate[$i][0]." ".$months[(int)$ldate[$i][1]]." ".$ldate[$i][2]."<br>";
-				echo "<form method='POST' autocomplete='off'>";
-				echo addtimes($ltime[$i][0], $ltime[$i][1], $i, $uname, $people, $maxslot);
+			if (!datePassed($date)){
+				$maxslot = $row["Maxslot"];
+				$people = $row["Participants"];
+				$people = json_decode($people, true);
+				// var_dump($people);
+				$_SESSION['lastpage'] = "./viewevent.php?e=".$ename;
+				$ldate = deformat($date,'date');
+				$ltime = deformat($date,'time');
+				$ppl = [];
+				$hr = [];
+				echo "<h1 class='hache'>".$name."</h1><br>";
+				$months = array('', 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre');
+				for ($i=0; $i<count($ldate); $i++){
+					echo "".$ldate[$i][0]." ".$months[(int)$ldate[$i][1]]." ".$ldate[$i][2]."<br>";
+					echo "<form method='POST' autocomplete='off'>";
+					echo addtimes($ltime[$i][0], $ltime[$i][1], $i, $uname, $people, $maxslot);
+				}
+			echo "<input type='submit' name='save' value='Enregistrer' class='passbuttonadd'></form>";
+			}else{
+				echo "L'événement est déjà terminé.";
 			}
 		}
-
 		
 		}else{
 			echo "No event found.";
@@ -50,8 +54,6 @@ require "times.php"; ?>
 	}else{
 		echo "No event found.";
 	}
-	echo "<input type='submit' name='save' value='Enregistrer' class='passbuttonadd'>
-	</form>";
 
 	if (isset($_POST['save'])){
 		if (isset($_SESSION['Username'])){
