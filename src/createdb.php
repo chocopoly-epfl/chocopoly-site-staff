@@ -1,8 +1,8 @@
 <?php
-	// $db_host = "localhost";
-	// $db_name = "chocopoly";
-	// $db_pass = "";
-	// $db_user = "root";
+$db_host = getenv('DB_HOST');
+$db_name = getenv('DB_NAME');
+$db_pass = getenv('DB_PASS');
+$db_user = getenv('DB_USER');
 	
 	$conn = mysqli_connect($db_host, $db_user, $db_pass);
 	
