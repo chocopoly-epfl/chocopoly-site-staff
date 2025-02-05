@@ -1,4 +1,5 @@
-<?php require "dbconn.php"; ?>
+<?php require "dbconn.php";
+session_start(); ?>
 
 <link rel='icon' href='./photos/heart_choco.svg' sizes='32x32'>
 <link href='https://fonts.googleapis.com/css2?family=Gemunu+Libre:wght@800&display=swap' rel='stylesheet'>
