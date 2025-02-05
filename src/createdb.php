@@ -1,5 +1,9 @@
 <?php
-	
+
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 	$conn = mysqli_connect($db_host, $db_user, $db_pass);
 	
 	mysqli_query($conn, "CREATE DATABASE IF NOT EXISTS chocopoly");
