@@ -1,7 +1,7 @@
+<?php require "header.php"; require "times.php"; ?>
+
 <!DOCTYPE html>
 <html lang="fr">
-
-<?php require "header.php"; require "times.php"; ?>
 
 <head>
 	<title>Events - Chocopoly</title>
