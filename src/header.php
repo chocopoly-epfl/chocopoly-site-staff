@@ -5,7 +5,7 @@ session_start(); ?>
 <link href='https://fonts.googleapis.com/css2?family=Gemunu+Libre:wght@800&display=swap' rel='stylesheet'>
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 <link href='https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap' rel='stylesheet'>
-<link rel='stylesheet' type='text/css' href='styles.css?ver=4'>
+<link rel='stylesheet' type='text/css' href='styles.css?ver=10'>
 
 <!-- <script src='./header.js'></script> -->
 

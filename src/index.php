@@ -1,6 +1,10 @@
 <?php 
 
-require "header.php"; require "times.php"; ?>
+// require "header.php"; require "times.php";
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+die("TEST");
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
