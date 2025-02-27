@@ -1,21 +1,23 @@
 <?php 
 
 require "header.php"; require "times.php";
-// error_reporting(E_ALL);
-// ini_set('display_errors', 1);
-// die("TEST");
+if (!isAdmin()){
+	header("Location: /", true, 301);
+	die();
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
-	<title>Events - Chocopoly</title>
+	<title>PAGE ADMIN - Chocopoly</title>
 </head>
 
 <body>
 	<?php
 
+	echo "<br><h2>PAGE ADMIN</h2>";
 	$months = array('', 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre');
 
 	$query = "SELECT * FROM events ORDER BY PseudoDate DESC";
@@ -38,7 +40,7 @@ require "header.php"; require "times.php";
 		echo"<div id='box'>";
 		if ($i > 0){
 			echo"<svg width='600', height='".($i*150 + 50)."'>";
-			echo"<rect width='600' height='".($i*150 + 50)."' rx='20' ry='20' x='0' y='0' rx='0' ry='0' fill='rgb(180, 0, 0)' />";
+			echo"<rect width='600' height='".($i*150 + 50)."' rx='20' ry='20' x='0' y='0' rx='0' ry='0' fill='rgb(0, 133, 80)' />";
 		}else{
 			echo "Aucun événement en ce moment.";
 		}
@@ -59,10 +61,10 @@ require "header.php"; require "times.php";
 				// $sql = "UPDATE events SET PseudoDate='".pseudoDate($date, 0)."' WHERE EventId='".$eid."'";
 				// $result2 = mysqli_query($conn, $sql);
 		
-				echo "<a href='./viewevent.php?e=".$eid."'><svg>";
-				echo "<rect width='500' height='100' class='svgrect' x='55' y='".(55 + $i*150)."' fill='rgb(100, 0, 0)' />";
+				echo "<a href='./adminview.php?e=".$eid."'><svg>";
+				echo "<rect width='500' height='100' class='svgrect' x='55' y='".(55 + $i*150)."' fill='rgb(0, 72, 43)' />";
 				echo "<rect width='500' height='100' class='svgrect' x='50' y='".(50 + $i*150)."' fill='rgb(255, 255, 255)' />";
-				echo "<text x='75' y='".(110 + $i*150)."' class='hache'>".$name."</text>";
+				echo "<text x='75' y='".(110 + $i*150)."' class='hache' style='fill:rgb(0, 50, 30)'>".$name."</text>";
 				echo "<text x='75' y='".(130 + $i*150)."' class='h2'>".datestring($date)."</text>";
 				echo"<circle cx='500' cy='".(100 + $i*150)."' r='30' style='fill:#cccccc'/>";
 				if (participant($uname, $part)){
@@ -75,12 +77,12 @@ require "header.php"; require "times.php";
 	}
 	echo"</svg>";
 	if (!isset($_GET['e'])){
-		echo "<br><br><a href='./?e=all'>Voir tous les events</a><br><br>";
+		echo "<br><br><a href='./admin.php?e=all'>Voir tous les events</a><br><br>";
 	}else{
-		echo "<br><br><a href='./'>Voir moins</a><br><br>";
+		echo "<br><br><a href='./admin.php'>Voir moins</a><br><br>";
 	}
 	echo"</div>";
-	
+		
 	?>	
 
 </body>

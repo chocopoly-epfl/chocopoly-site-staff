@@ -21,13 +21,23 @@
 		}
 	}
 
-	function modifyEvent($id, $name,$dates,$maxslot){
+	function modifyEvent($id, $name, $dates, $maxslot){
 		require "dbconn.php";
 		if (checkdates($dates, 'all')){
 			$name = filter_var($name, FILTER_SANITIZE_STRING);
 			$maxslot = filter_var($maxslot, FILTER_SANITIZE_STRING);
-			$sql = "UPDATE events SET Name='".$name."', Date='".$dates."', PseudoDate='".pseudoDate($dates, 0)."', Maxslot='".$maxslot."' WHERE EventId='".$id."'";
-			$result = mysqli_query($conn, $sql);
+			if (isset($name)){
+				$sql = "UPDATE events SET Name='".$name."' WHERE EventId='".$id."'";
+				$result = mysqli_query($conn, $sql);
+			}
+			if (isset($dates)){
+				$sql = "UPDATE events SET Date='".$dates."', PseudoDate='".pseudoDate($dates, 0)."' WHERE EventId='".$id."'";
+				$result = mysqli_query($conn, $sql);
+			}
+			if (isset($maxslot)){
+				$sql = "UPDATE events SET Maxslot='".$maxslot."' WHERE EventId='".$id."'";
+				$result = mysqli_query($conn, $sql);
+			}
 
 			$link = "https://staff.chocopoly.ch/viewevent.php?e=".$id;
 			return json_encode(array("link"=>$link));

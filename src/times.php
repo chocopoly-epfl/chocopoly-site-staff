@@ -1,7 +1,8 @@
 <script src='./times.js'></script>
 
 <?php
-	function addtimes($a, $b, $n, $uname, $list, $slotmax){
+	function addtimes($a, $b, $n, $uname, $list, $slotmax, $admin){
+		// print_r($list);
 		$h = [];
 		$a2 = False;
 		if (!filter_var($a, FILTER_VALIDATE_INT)){
@@ -32,12 +33,18 @@
 		$timemax = timemax($a, $b, $n, $list);
 		$t = $a;
 		for ($i = 0; $i<count($h)*2-2; $i++){
-			if ($timemax[$i] >= $slotmax){$red = 'background-color:#ff8800;';}else{$red = '';}
-			echo "<td class='sp2' colspan='1' style='";
+			if ($timemax[$i] >= $slotmax){$red = 'background-color:#ff8800;';}
+			else{$red = '';}
+			echo "<td class='sp2' "; 
+			if ($admin){
+				echo "id='small'";
+			}
+			echo " colspan='1' style='";
 			if ($i % 2 != 0){
 				echo "border-right: 1px solid black;";
 			}
-			echo $red."'></td>";
+			echo $red."'>";
+			echo "</td>";
 			$t += 0.5;
 		}
 		echo "<td class='sp2'></td>";
@@ -60,15 +67,45 @@
 				}else{
 					$cl = 'not';
 				}
-				echo "<td class='".$cl."' onmousedown='mclick(".$i.",".$n.")' onmouseenter='mhover(".$i.")' data-time='".$nb."' id='".$i."-".$n."' style='".$style."'></td>";
+				if ($admin && $timemax[$i]>0){$color = 255 - round($timemax[$i]/$slotmax * 255/2); $red = 'background-color:rgb('.$color.', 255, 255);';}else if ($admin){$red = 'background-color:rgb(255, 199, 86);';}
+				if ($admin){
+					echo "<td class='admintimes' onmousedown='showpeople(".$i.",".$n.")' onmouseover='showpeople(".$i.",".$n.")' data-people='".listToText(peopleList($list, $n, $nb))."' data-nbpeople='".$timemax[$i]."' data-time='".$nb."' id='".$i."-".$n."' style='".$style." ".$red."'>";
+				}else{
+					echo "<td class='".$cl."' onmousedown='mclick(".$i.",".$n.")' onmouseenter='mhover(".$i.")' data-time='".$nb."' id='".$i."-".$n."' style='".$style." ".$red."'>";
+				}
+				if ($admin && $timemax[$i]>0){echo "<p style='font-size:20px;margin:-25px;'>".$timemax[$i]."</p>";}
+				echo "</td>";
 			}
 		}
 		echo "<td class='sp'></td>";
 		echo "</tr>";
 		echo "</table>";
-		echo "<div id='result-".$n."' class='errormessage'></div><br>";
+		echo "<div id='result-".$n."' class='errormessage' style='height:50px;'></div><br>";
 		echo "<form method='POST' autocomplete='off'><span id='heures-".$n."'><input type='hidden' value='".implode(',', $times[$n])."' name='heures-".$n."'></span>";
 	
+	}
+
+	function listToText($list){
+		$text = "";
+		foreach ($list as $value){
+			if ($text != ""){$text .= ", ";}
+			$text .= $value;
+		}
+		return $text;
+	}
+	
+	function peopleList($list, $nb, $hour){
+		$list2 = [];
+		foreach ($list as $key => $value){
+			// print_r($value[$nb]);
+			// echo $hour;
+			// echo "<br><br>";
+			if (in_array($hour, $value[$nb])){
+				array_push($list2,$key);
+			}
+		}
+		return $list2;
+		// return ["a", "b", "c"];
 	}
 
 	function participant2($name, $list){

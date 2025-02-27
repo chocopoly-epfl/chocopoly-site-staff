@@ -17,6 +17,24 @@ function mclick(x, n){
 	caseChange(x);
 }
 
+function showpeople(x, n){
+	whichdate = n;
+	element = document.getElementById(x+"-"+whichdate);
+	txt = element.getAttribute("data-people");
+	time = element.getAttribute("data-time");
+	nbpeople = element.getAttribute("data-nbpeople");
+	// document.getElementById("small-"+x+"-"+whichdate).className = "sp2-bis";
+	txt = totime(time) + " (" + nbpeople + "):<br>" + txt;
+	document.getElementById('result-'+whichdate).innerHTML = txt;
+}
+
+function listpart(x, n){
+	whichdate = n;
+	element = document.getElementById(x+"-"+whichdate);
+	txt = parseFloat(element.getAttribute("data-time"));
+	document.getElementById('result-'+whichdate).innerHTML = txt;
+}
+
 function munclick(){
 	if (mousedown){
 		mousedown = false;

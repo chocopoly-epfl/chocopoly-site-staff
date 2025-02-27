@@ -38,9 +38,9 @@ require "times.php"; ?>
 				echo "<h1 class='hache'>".$name."</h1><br>";
 				$months = array('', 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre');
 				for ($i=0; $i<count($ldate); $i++){
-					echo "".$ldate[$i][0]." ".$months[(int)$ldate[$i][1]]." ".$ldate[$i][2]."<br>";
+					echo "<p class=date>".$ldate[$i][0]." ".$months[(int)$ldate[$i][1]]." ".$ldate[$i][2]."</p><br>";
 					echo "<form method='POST' autocomplete='off'>";
-					echo addtimes($ltime[$i][0], $ltime[$i][1], $i, $uname, $people, $maxslot);
+					echo addtimes($ltime[$i][0], $ltime[$i][1], $i, $uname, $people, $maxslot, False);
 				}
 			echo "<input type='submit' name='save' value='Enregistrer' class='passbuttonadd'></form>";
 			}else{
